@@ -41,3 +41,35 @@ uint8_t m8013(uint16_t _SWITCH, uint16_t _MAX) {
     _a=_s;
     return out;
 }
+
+
+
+
+//
+
+
+void mCtrlBox()
+{
+     if (M5.BtnC.wasPressed()) _mCtrlRestart = 1;
+     static uint8_t Act, MKRCW, MKRFW, MKRCA, MKRFA, LarmAct, EnLarm, EnRun, wP;
+     if (Act) { EnLarm = 1; EnRun = 1; } else { EnRun=0; }
+     if (M5.BtnA.wasPressed() || _mCtrlRestart) { EnLarm=0; Act=Act?0:1; mekt.mPrint("A=" + String(Act)); }
+     if (Act && _mCtrlRestart) _mCtrlRestart=0;
+     if (Act && m801x(800,1000)) wP++;
+     
+     MKRCA = mtimeaT(MKRCW, EnLarm); MKRFA = mtimeaF(MKRFW, EnLarm);
+     mDORLY(EnRun);
+     if (EnLarm) { MKRCW = mb_larmNtu(); MKRFW = mFRQ_larm(); } else { MKRCW=0;MKRFW=0; }
+     
+     if (LarmAct != 0) {   Act=0;  }
+
+     alarmX="";
+     alarmX += " ACT" + String(Act) + " EnL" + String(EnLarm) + " EnR" + String(EnRun) + " wP" + String(wP);
+     alarmX += String(_8013state) + String(_8013changed);
+     alarmX += " CW" + String(MKRCW) + " FW" + String(MKRFW);
+     alarmX += " CA" + String(MKRCA) + " FA" + String(MKRFA) + "\r\n";
+     
+     
+     if (wP>=5) LarmAct = MKRCA + MKRFA; 
+
+}
