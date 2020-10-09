@@ -22,7 +22,7 @@ uint8_t m8013(uint8_t a) {
 // In same.
 
 uint8_t m8013() {
-    static uint32_t eee=0; static uint8_t _s, _a, _b; out;
+    static uint32_t eee=0; static uint8_t _s, _a, _b, out;
     if (!_a && _b) { _b=0; out=0; }
     else if (_a && !_b) { _b=1; out=1; }
     else { out=0; }
@@ -32,7 +32,7 @@ uint8_t m8013() {
     return out;
 }
 uint8_t m8013(uint16_t _SWITCH, uint16_t _MAX) {
-    static uint32_t eee=0; static uint8_t _s, _a, _b; out;
+    static uint32_t eee=0; static uint8_t _s, _a, _b, out;
     if (!_a && _b) { _b=0; out=0; }
     else if (_a && !_b) { _b=1; out=1; }
     else { out=0; }
